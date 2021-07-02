@@ -1,0 +1,14 @@
+version: ${project.version}
+name: DeathUtils
+main: com.danikvitek.deathutils.Main
+api-version: 1.17
+
+author: Danik Vitek
+description: Test plugin
+commands:
+  suicide:
+    aliases: []
+    description: kills you (survival/adventure)
+  remember:
+    aliases: []
+    description: tells you your last death location
