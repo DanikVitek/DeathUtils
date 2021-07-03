@@ -1,0 +1,5 @@
+# if your server has more than one world, simply add their names and relative in-game names here
+worlds_names:
+  world: 'Overworld'
+  world_nether: 'Nether'
+  world_the_end: 'The End'

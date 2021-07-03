@@ -11,6 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -22,6 +24,9 @@ public final class Main extends JavaPlugin implements Listener {
     private File deathCoordinatesFile;
     private YamlConfiguration modifyDeathCoordinatesFile;
 
+    public static Permission CAN_SUICIDE = new Permission("deathutils.command.suicide");
+    public static Permission CAN_KNOW_DEATH_LOCATION = new Permission("deathutils.knowdeath");
+    public static Permission CAN_REMEMBER_DEATH_LOCATION = new Permission("deathutils.command.remember");
 
     @Override
     public void onEnable() {
@@ -30,6 +35,8 @@ public final class Main extends JavaPlugin implements Listener {
 
         this.getConfig().options().copyDefaults();
         saveDefaultConfig();
+
+        init_permissions();
 
         getCommand("suicide").setExecutor(new SuicideCommand());
         getCommand("remember").setExecutor(new RememberCommand(this));
@@ -62,18 +69,30 @@ public final class Main extends JavaPlugin implements Listener {
         Location deathLoc = player.getLocation();
         World deathWorld = deathLoc.getWorld();
         String deathLocStr = "X: " + deathLoc.getBlockX() + " Y: " + deathLoc.getBlockY() + " Z: " + deathLoc.getBlockZ();
-        String deathWorldStr = "World: " + deathWorld.getName();
-
-        player.sendMessage(
-                ChatColor.GOLD + "Your death position: " + ChatColor.YELLOW + deathLocStr + ", " + deathWorldStr);
+        String deathWorldStr = "World: " + RememberCommand.getWorldsNames(this).get(deathWorld.getName());
 
         modifyDeathCoordinatesFile.set(player.getName() + ".location", deathLoc);
         modifyDeathCoordinatesFile.save(deathCoordinatesFile);
+
+        if (player.hasPermission(CAN_KNOW_DEATH_LOCATION))
+            player.sendMessage(
+                    ChatColor.GOLD + "Your death position: " + ChatColor.YELLOW + deathLocStr + ", " + deathWorldStr);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
         System.out.println("DeathUtils plugin DISABLED");
+    }
+
+    public void init_permissions(){
+        CAN_SUICIDE.setDefault(PermissionDefault.TRUE);
+        CAN_SUICIDE.setDescription("If the player can use /suicide command");
+
+        CAN_KNOW_DEATH_LOCATION.setDefault(PermissionDefault.OP);
+        CAN_KNOW_DEATH_LOCATION.setDescription("If the player can get death location info on death");
+
+        CAN_REMEMBER_DEATH_LOCATION.setDefault(PermissionDefault.OP);
+        CAN_REMEMBER_DEATH_LOCATION.setDescription("If the player can use /remember command");
     }
 }
