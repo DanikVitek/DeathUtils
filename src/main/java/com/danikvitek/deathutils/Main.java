@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.IOException;
 
 public final class Main extends JavaPlugin implements Listener {
+    public String pluginName = "DeathUtils";
+
     private File deathCoordinatesFile;
     private YamlConfiguration modifyDeathCoordinatesFile;
 
@@ -45,7 +47,7 @@ public final class Main extends JavaPlugin implements Listener {
     public YamlConfiguration getModifyDeathCoordinatesFile() { return modifyDeathCoordinatesFile; }
 
     public void initFiles() throws IOException {
-        deathCoordinatesFile = new File(Bukkit.getServer().getPluginManager().getPlugin("Test").getDataFolder(),
+        deathCoordinatesFile = new File(Bukkit.getServer().getPluginManager().getPlugin(pluginName).getDataFolder(),
                 "death_coordinates.yml");
         if (!deathCoordinatesFile.exists())
             deathCoordinatesFile.createNewFile();
@@ -65,14 +67,7 @@ public final class Main extends JavaPlugin implements Listener {
         player.sendMessage(
                 ChatColor.GOLD + "Your death position: " + ChatColor.YELLOW + deathLocStr + ", " + deathWorldStr);
 
-//        Map<String, Integer> deathLocMap = new HashMap<String, Integer>();
-//        deathLocMap.put("x", deathLoc.getBlockX());
-//        deathLocMap.put("y", deathLoc.getBlockY());
-//        deathLocMap.put("z", deathLoc.getBlockZ());
-
         modifyDeathCoordinatesFile.set(player.getName() + ".location", deathLoc);
-//        modifyDeathCoordinatesFile.set(player.getName() + ".world", deathWorld.getName());
-
         modifyDeathCoordinatesFile.save(deathCoordinatesFile);
     }
 
