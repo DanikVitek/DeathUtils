@@ -1,4 +1,4 @@
-# DeathUtils
+# DeathUtils 1.1
 
 At the moment this plugin lets the player to get information of where did he/she died and to kill their character for any reason (survival and adventure mode only).
 
