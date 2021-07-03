@@ -1,5 +1,6 @@
 package com.danikvitek.deathutils;
 
+import com.danikvitek.deathutils.comands.DamageCommand;
 import com.danikvitek.deathutils.comands.RememberCommand;
 import com.danikvitek.deathutils.comands.SuicideCommand;
 import org.bukkit.Bukkit;
@@ -27,6 +28,7 @@ public final class Main extends JavaPlugin implements Listener {
     public static Permission CAN_SUICIDE = new Permission("deathutils.command.suicide");
     public static Permission CAN_KNOW_DEATH_LOCATION = new Permission("deathutils.knowdeath");
     public static Permission CAN_REMEMBER_DEATH_LOCATION = new Permission("deathutils.command.remember");
+    public static Permission CAN_USE_DAMAGE = new Permission("deathutils.command.damage");
 
     @Override
     public void onEnable() {
@@ -40,6 +42,7 @@ public final class Main extends JavaPlugin implements Listener {
 
         getCommand("suicide").setExecutor(new SuicideCommand());
         getCommand("remember").setExecutor(new RememberCommand(this));
+        getCommand("damage").setExecutor(new DamageCommand());
 
         Bukkit.getPluginManager().registerEvents(this, this);
 
@@ -96,5 +99,8 @@ public final class Main extends JavaPlugin implements Listener {
 
         CAN_REMEMBER_DEATH_LOCATION.setDefault(PermissionDefault.OP);
         CAN_REMEMBER_DEATH_LOCATION.setDescription("If the player can use /remember command");
+
+        CAN_USE_DAMAGE.setDefault(PermissionDefault.OP);
+        CAN_USE_DAMAGE.setDescription("If the player can use /damage command");
     }
 }

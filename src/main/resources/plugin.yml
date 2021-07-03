@@ -4,11 +4,17 @@ main: com.danikvitek.deathutils.Main
 api-version: 1.17
 
 author: Danik Vitek
-description: Test plugin
+description: The plugin for controlling some death components of players and entities
 commands:
   suicide:
-    aliases: []
+    aliases: [killme]
     description: kills you (survival/adventure)
+    usage: "/suicide"
   remember:
-    aliases: []
+    aliases: [death, deathloc]
     description: tells you your last death location
+    usage: "/remember"
+  damage:
+    aliases: [harm]
+    description: deals certain damage to the specific entity
+    usage: "/damage <target> <amount> [has_source]"

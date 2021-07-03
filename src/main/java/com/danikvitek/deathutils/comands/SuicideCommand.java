@@ -21,6 +21,6 @@ public class SuicideCommand implements CommandExecutor {
             System.out.println("Can't use this command if not a player.");
         }
 
-        return false;
+        return true;
     }
 }
