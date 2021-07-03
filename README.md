@@ -10,4 +10,10 @@ At the moment this plugin lets the player to get information of where did he/she
 
 ---
 
-There might be futher updates for the plugin, e.g. config usage.
+## Configurations
+
+In config.yml now you can list all of your worlds and their names in death and `/remember` messages will be represented respectively with what you have specified.
+
+---
+
+There might be futher updates for the plugin.
