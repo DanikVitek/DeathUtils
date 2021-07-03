@@ -69,7 +69,9 @@ public final class Main extends JavaPlugin implements Listener {
         Location deathLoc = player.getLocation();
         World deathWorld = deathLoc.getWorld();
         String deathLocStr = "X: " + deathLoc.getBlockX() + " Y: " + deathLoc.getBlockY() + " Z: " + deathLoc.getBlockZ();
-        String deathWorldStr = "World: " + RememberCommand.getWorldsNames(this).get(deathWorld.getName());
+        String deathWorldStr = "World: " +
+                (RememberCommand.getWorldsNames(this).get(deathWorld.getName()) != null ?
+                RememberCommand.getWorldsNames(this).get(deathWorld.getName()) : deathWorld.getName());
 
         modifyDeathCoordinatesFile.set(player.getName() + ".location", deathLoc);
         modifyDeathCoordinatesFile.save(deathCoordinatesFile);

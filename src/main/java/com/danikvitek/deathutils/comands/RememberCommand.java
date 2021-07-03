@@ -28,7 +28,9 @@ public class RememberCommand implements CommandExecutor {
                 if (main.getModifyDeathCoordinatesFile().contains(player.getName())) {
                     Location deathLoc = main.getModifyDeathCoordinatesFile().getLocation(player.getName() + ".location");
                     String deathLocStr = "X: " + deathLoc.getBlockX() + " Y: " + deathLoc.getBlockY() + " Z: " + deathLoc.getBlockZ(),
-                            deathWorldStr = "World: " + getWorldsNames(main).get(deathLoc.getWorld().getName());
+                            deathWorldStr = "World: " + (getWorldsNames(main).get(deathLoc.getWorld().getName()) != null ?
+                                    getWorldsNames(main).get(deathLoc.getWorld().getName()) :
+                                    deathLoc.getWorld().getName());
                     player.sendMessage(
                             ChatColor.GOLD + "Your last death position: " + ChatColor.YELLOW + deathLocStr + ", " + deathWorldStr);
                 } else {
