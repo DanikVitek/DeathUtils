@@ -16,7 +16,8 @@
 
 `/damage` – deals damage to the Damageble entities (Usage: /damage <target> <amount> [has_source]);
   
-`/deathtp` – teleports the player to the last death location of the specified player, if specified. Else – to the own one.
+`/deathtp` – teleports the player to the last death location of the specified player, if specified. Else – to the own one. 
+  (Usage: `/deathtp [player]`)
 
 ---
 
