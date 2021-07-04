@@ -17,8 +17,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -31,13 +29,6 @@ public final class Main extends JavaPlugin implements Listener {
     private File deathCoordinatesFile;
     private YamlConfiguration modifyDeathCoordinatesFile;
 
-    public static Permission CAN_SUICIDE = new Permission("deathutils.command.suicide");
-    public static Permission CAN_KNOW_DEATH_LOCATION = new Permission("deathutils.knowdeath");
-    public static Permission CAN_REMEMBER_DEATH_LOCATION = new Permission("deathutils.command.remember");
-    public static Permission CAN_USE_DAMAGE = new Permission("deathutils.command.damage");
-    public static Permission CAN_DEATH_TP = new Permission("deathutils.command.deathtp");
-    public static Permission CAN_DEATH_TP_TO_OTHERS = new Permission("deathutils.command.deathtp.to_others");
-
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -46,7 +37,7 @@ public final class Main extends JavaPlugin implements Listener {
         this.getConfig().options().copyDefaults();
         saveDefaultConfig();
 
-        init_permissions();
+        Permissions.init_permissions();
 
         getCommand("suicide").setExecutor(new SuicideCommand());
         getCommand("remember").setExecutor(new RememberCommand(this));
@@ -89,9 +80,9 @@ public final class Main extends JavaPlugin implements Listener {
         modifyDeathCoordinatesFile.set(player.getName() + ".location", deathLoc);
         modifyDeathCoordinatesFile.save(deathCoordinatesFile);
 
-        if (player.hasPermission(CAN_KNOW_DEATH_LOCATION)) {
+        if (player.hasPermission(Permissions.CAN_KNOW_DEATH_LOCATION.getPerm())) {
             TextComponent deathLocMessage = new TextComponent(ChatColor.GOLD + "Your death position: " + ChatColor.YELLOW + deathLocStr + ", " + deathWorldStr);
-            if (player.hasPermission(CAN_DEATH_TP)){
+            if (player.hasPermission(Permissions.CAN_DEATH_TP.getPerm())){
                 deathLocMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor.GREEN + "Click to teleport.")));
                 deathLocMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/deathtp "+player.getName()));
             }
@@ -103,25 +94,5 @@ public final class Main extends JavaPlugin implements Listener {
     public void onDisable() {
         // Plugin shutdown logic
         System.out.println("DeathUtils plugin DISABLED");
-    }
-
-    public void init_permissions(){
-        CAN_SUICIDE.setDefault(PermissionDefault.TRUE);
-        CAN_SUICIDE.setDescription("If the player can use /suicide command");
-
-        CAN_KNOW_DEATH_LOCATION.setDefault(PermissionDefault.OP);
-        CAN_KNOW_DEATH_LOCATION.setDescription("If the player can get death location info on death");
-
-        CAN_REMEMBER_DEATH_LOCATION.setDefault(PermissionDefault.OP);
-        CAN_REMEMBER_DEATH_LOCATION.setDescription("If the player can use /remember command");
-
-        CAN_USE_DAMAGE.setDefault(PermissionDefault.OP);
-        CAN_USE_DAMAGE.setDescription("If the player can use /damage command");
-
-        CAN_DEATH_TP.setDefault(PermissionDefault.OP);
-        CAN_DEATH_TP.setDescription("If the player can use /deathtp command");
-
-        CAN_DEATH_TP_TO_OTHERS.setDefault(PermissionDefault.OP);
-        CAN_DEATH_TP.setDescription("If the player can use /deathtp command to teleport to other players' death locations");
     }
 }

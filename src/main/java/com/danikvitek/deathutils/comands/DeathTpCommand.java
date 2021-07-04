@@ -1,6 +1,7 @@
 package com.danikvitek.deathutils.comands;
 
 import com.danikvitek.deathutils.Main;
+import com.danikvitek.deathutils.Permissions;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,9 +21,9 @@ public class DeathTpCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player){
             Player player = (Player) sender;
-            if (player.hasPermission(Main.CAN_DEATH_TP)){
+            if (player.hasPermission(Permissions.CAN_DEATH_TP.getPerm())){
                 if (args.length > 0)
-                    if (player.hasPermission(Main.CAN_DEATH_TP_TO_OTHERS)){
+                    if (player.hasPermission(Permissions.CAN_DEATH_TP_TO_OTHERS.getPerm())){
                         String targetPlayer = args[0];
                         if (main.getModifyDeathCoordinatesFile().contains(targetPlayer))
                             player.teleport(Objects.requireNonNull(main.getModifyDeathCoordinatesFile().getLocation(targetPlayer + ".location")));

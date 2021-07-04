@@ -1,6 +1,6 @@
 package com.danikvitek.deathutils.comands;
 
-import com.danikvitek.deathutils.Main;
+import com.danikvitek.deathutils.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -24,7 +24,7 @@ public class DamageCommand implements CommandExecutor {
         if(sender instanceof Player){
             Player player = (Player) sender;
 
-            if (player.hasPermission(Main.CAN_USE_DAMAGE)){
+            if (player.hasPermission(Permissions.CAN_USE_DAMAGE.getPerm())){
                 try {
                     if (args.length < 2) throw new NullPointerException();
                     String target = args[0];

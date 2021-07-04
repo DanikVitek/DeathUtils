@@ -1,6 +1,7 @@
 package com.danikvitek.deathutils.comands;
 
 import com.danikvitek.deathutils.Main;
+import com.danikvitek.deathutils.Permissions;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -28,7 +29,7 @@ public class RememberCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (player.hasPermission(Main.CAN_REMEMBER_DEATH_LOCATION)) {
+            if (player.hasPermission(Permissions.CAN_REMEMBER_DEATH_LOCATION.getPerm())) {
                 if (main.getModifyDeathCoordinatesFile().contains(player.getName())) {
                     Location deathLoc = main.getModifyDeathCoordinatesFile().getLocation(player.getName() + ".location");
                     assert deathLoc != null;
@@ -38,7 +39,7 @@ public class RememberCommand implements CommandExecutor {
                                     deathLoc.getWorld().getName());
 
                     TextComponent deathLocMessage = new TextComponent(ChatColor.GOLD + "Your last death position: " + ChatColor.YELLOW + deathLocStr + ", " + deathWorldStr);
-                    if (player.hasPermission(Main.CAN_DEATH_TP)) {
+                    if (player.hasPermission(Permissions.CAN_DEATH_TP.getPerm())) {
                         deathLocMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor.GREEN + "Click to teleport.")));
                         deathLocMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/deathtp "+player.getName()));
                     }
