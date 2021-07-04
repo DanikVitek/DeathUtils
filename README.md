@@ -1,4 +1,4 @@
-# DeathUtils 1.3
+# DeathUtils 1.3.1
 
 ## Features
 
