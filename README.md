@@ -1,4 +1,4 @@
-# DeathUtils 1.2
+# DeathUtils 1.3
 
 ## Features
 
