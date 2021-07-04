@@ -1,6 +1,12 @@
 # DeathUtils 1.2
 
-At the moment this plugin lets the player to get information of where did he/she died and to kill their character for any reason (survival and adventure mode only).
+## Features
+
+* Player is now able to get information ablout the last death location of his/her character (needs permission).
+* Player can get information of the last death location if needed by using `/remember` (needs permission).
+* Player can teleport to the last death location by clicking on the death location info message or with the command `/deathtp` (needs permission).
+* Player can teleport to the other player's last death location by using `/deathtp [player]` (needs permission).
+* Player can kill his/her character.
 
 ---
 
@@ -8,7 +14,9 @@ At the moment this plugin lets the player to get information of where did he/she
 
 `/remember` – tells the last death location (it is saved in the file DeathUtils/death_coordinates.yml);
 
-`/damage` – deals damage to the Damageble entities (Usage: /damage <target> <amount> [has_source]).
+`/damage` – deals damage to the Damageble entities (Usage: /damage <target> <amount> [has_source]);
+  
+`/deathtp` – teleports the player to the last death location of the specified player, if specified. Else – to the own one.
 
 ---
 
@@ -27,7 +35,11 @@ If the world name is not specified, there will be world folder name in the death
 
 `deathutils.command.suicide` – if the player can use /suicide command (Default: true);
 
-`deathutils.command.damage` – if the player can use /damage (Default: op).
+`deathutils.command.damage` – if the player can use /damage command (Default: op);
+  
+`deathutils.command.deathtp` – if the player can use /deathtp command (Default: op);
+  
+`deathutils.command.deathtp.to_others` – if the player can use /deathtp command to teleport to the other player's last death location (Default: op).
 
 ---
 
