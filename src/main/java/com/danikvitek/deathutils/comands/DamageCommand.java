@@ -25,13 +25,11 @@ public class DamageCommand implements CommandExecutor {
             Player player = (Player) sender;
 
             if (player.hasPermission(Main.CAN_USE_DAMAGE)){
-                String target = null;
-                int amount = 0;
-                boolean hasSource = false;
                 try {
-                    target = args[0];
-                    amount = Integer.parseInt(args[1]);
-                    hasSource = args.length == 3 && Boolean.parseBoolean(args[2]);
+                    if (args.length < 2) throw new NullPointerException();
+                    String target = args[0];
+                    int amount = Integer.parseInt(args[1]);
+                    boolean hasSource = args.length == 3 && Boolean.parseBoolean(args[2]);
                     if (amount < 0)
                         throw new NumberFormatException();
 
@@ -50,15 +48,14 @@ public class DamageCommand implements CommandExecutor {
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
                     player.sendMessage(ChatColor.RED + usage);
                 } catch (NumberFormatException e){
-                    player.sendMessage(ChatColor.RED + "amount must be integer and greater than 0");
+                    player.sendMessage(ChatColor.RED + "Amount must be integer and greater than 0");
                 }
             }
         } else {
-            String target = null;
-            int amount = 0;
             try {
-                target = args[0];
-                amount = Integer.parseInt(args[1]);
+                if (args.length < 2) throw new NullPointerException();
+                String target = args[0];
+                int amount = Integer.parseInt(args[1]);
                 if (amount < 0)
                     throw new NumberFormatException();
 
@@ -77,7 +74,7 @@ public class DamageCommand implements CommandExecutor {
             } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
                 System.out.println(usage);
             } catch (NumberFormatException e){
-                System.out.println("amount must be integer and greater than 0");
+                System.out.println("Amount must be integer and greater than 0");
             }
         }
 

@@ -18,3 +18,7 @@ commands:
     aliases: [harm]
     description: deals certain damage to the specific entity
     usage: "/damage <target> <amount> [has_source]"
+  deathtp:
+    aliases: [tpdeath, death_tp, tp_death]
+    description: teleport to the saved player's death location
+    usage: "/deathtp [player]"

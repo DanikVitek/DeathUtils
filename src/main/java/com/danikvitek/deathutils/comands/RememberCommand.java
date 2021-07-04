@@ -1,6 +1,10 @@
 package com.danikvitek.deathutils.comands;
 
 import com.danikvitek.deathutils.Main;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -27,12 +31,18 @@ public class RememberCommand implements CommandExecutor {
             if (player.hasPermission(Main.CAN_REMEMBER_DEATH_LOCATION)) {
                 if (main.getModifyDeathCoordinatesFile().contains(player.getName())) {
                     Location deathLoc = main.getModifyDeathCoordinatesFile().getLocation(player.getName() + ".location");
+                    assert deathLoc != null;
                     String deathLocStr = "X: " + deathLoc.getBlockX() + " Y: " + deathLoc.getBlockY() + " Z: " + deathLoc.getBlockZ(),
-                            deathWorldStr = "World: " + (getWorldsNames(main).get(deathLoc.getWorld().getName()) != null ?
+                            deathWorldStr = "World: " + (getWorldsNames(main).get(Objects.requireNonNull(deathLoc.getWorld()).getName()) != null ?
                                     getWorldsNames(main).get(deathLoc.getWorld().getName()) :
                                     deathLoc.getWorld().getName());
-                    player.sendMessage(
-                            ChatColor.GOLD + "Your last death position: " + ChatColor.YELLOW + deathLocStr + ", " + deathWorldStr);
+
+                    TextComponent deathLocMessage = new TextComponent(ChatColor.GOLD + "Your last death position: " + ChatColor.YELLOW + deathLocStr + ", " + deathWorldStr);
+                    if (player.hasPermission(Main.CAN_DEATH_TP)) {
+                        deathLocMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor.GREEN + "Click to teleport.")));
+                        deathLocMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/deathtp "+player.getName()));
+                    }
+                    player.spigot().sendMessage(deathLocMessage);
                 } else {
                     player.sendMessage(ChatColor.GOLD + "No death notes");
                 }

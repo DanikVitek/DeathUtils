@@ -9,12 +9,13 @@ import org.bukkit.entity.Player;
 
 public class SuicideCommand implements CommandExecutor {
     @Override
+    @SuppressWarnings("deprecation")
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player){
             Player player = (Player) sender;
 
             if (player.hasPermission(Main.CAN_SUICIDE))
-                player.damage(player.getHealthScale());
+                player.damage(player.getMaxHealth());
             else
                 player.sendMessage(ChatColor.DARK_RED + "You have no permission to do that");
         } else {
