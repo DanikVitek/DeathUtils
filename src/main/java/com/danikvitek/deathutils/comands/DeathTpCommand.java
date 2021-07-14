@@ -11,12 +11,6 @@ import org.bukkit.entity.Player;
 import java.util.Objects;
 
 public class DeathTpCommand implements CommandExecutor {
-    Main main;
-
-    public DeathTpCommand(Main main){
-        this.main = main;
-    }
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player){
@@ -25,20 +19,25 @@ public class DeathTpCommand implements CommandExecutor {
                 if (args.length > 0)
                     if (player.hasPermission(Permissions.CAN_DEATH_TP_TO_OTHERS.getPerm())){
                         String targetPlayer = args[0];
-                        if (main.getModifyDeathCoordinatesFile().contains(targetPlayer))
-                            player.teleport(Objects.requireNonNull(main.getModifyDeathCoordinatesFile().getLocation(targetPlayer + ".location")));
-                        else player.sendMessage(ChatColor.GOLD + "No death notes for " + targetPlayer);
+                        if (Main.getModifyDeathCoordinatesFile().contains(targetPlayer))
+                            player.teleport(Objects.requireNonNull(Main.getModifyDeathCoordinatesFile().getLocation(targetPlayer + ".location")));
+                        else player.sendMessage(Main.getModifyLocalizationFile().getString("no_death_notes_for",
+                                ChatColor.GOLD + "No death notes for") + " " + targetPlayer);
                     } else
-                        player.sendMessage(ChatColor.DARK_RED + "You have no permission to do that");
+                        player.sendMessage(Main.getModifyLocalizationFile().getString("no_permission",
+                                ChatColor.DARK_RED + "You have no permission to do that"));
                 else {
-                    if (main.getModifyDeathCoordinatesFile().contains(player.getName()))
-                        player.teleport(Objects.requireNonNull(main.getModifyDeathCoordinatesFile().getLocation(player.getName() + ".location")));
-                    else player.sendMessage(ChatColor.GOLD + "No death notes for you");
+                    if (Main.getModifyDeathCoordinatesFile().contains(player.getName()))
+                        player.teleport(Objects.requireNonNull(Main.getModifyDeathCoordinatesFile().getLocation(player.getName() + ".location")));
+                    else player.sendMessage(Main.getModifyLocalizationFile().getString("no_death_notes_for_you",
+                            ChatColor.GOLD + "No death notes for you"));
                 }
             } else
-                player.sendMessage(ChatColor.DARK_RED + "You have no permission to do that");
+                player.sendMessage(Main.getModifyLocalizationFile().getString("no_permission",
+                        ChatColor.DARK_RED + "You have no permission to do that"));
         } else {
-            System.out.println("Can't use this command if not a player.");
+            System.out.println(Main.getModifyLocalizationFile().getString("console_cant",
+                    "Can't use this command if not a player."));
         }
 
         return true;

@@ -1,5 +1,6 @@
 package com.danikvitek.deathutils.comands;
 
+import com.danikvitek.deathutils.Main;
 import com.danikvitek.deathutils.Permissions;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -17,9 +18,10 @@ public class SuicideCommand implements CommandExecutor {
             if (player.hasPermission(Permissions.CAN_SUICIDE.getPerm()))
                 player.damage(player.getMaxHealth());
             else
-                player.sendMessage(ChatColor.DARK_RED + "You have no permission to do that");
+                player.sendMessage(Main.getModifyLocalizationFile().getString("no_permission",
+                        ChatColor.DARK_RED + "You have no permission to do that"));
         } else {
-            System.out.println("Can't use this command if not a player.");
+            System.out.println(Main.getModifyLocalizationFile().getString("console_cant", "Can't use this command if not a player."));
         }
 
         return true;

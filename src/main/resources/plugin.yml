@@ -3,7 +3,7 @@ name: DeathUtils
 main: com.danikvitek.deathutils.Main
 api-version: 1.17
 
-author: Danik Vitek
+author: Danik_Vitek
 description: The plugin for controlling some death components of players and entities
 commands:
   suicide:
@@ -22,3 +22,7 @@ commands:
     aliases: [tpdeath, death_tp, tp_death]
     description: teleport to the saved player's death location
     usage: "/deathtp [player]"
+#  opengrave:
+#    aliases: [graveopen, open_grave, grave_open]
+#    description: Opens specified grave if exists
+#    usage: "/opengrave [player]"

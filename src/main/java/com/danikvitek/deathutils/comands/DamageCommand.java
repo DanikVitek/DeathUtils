@@ -1,5 +1,6 @@
 package com.danikvitek.deathutils.comands;
 
+import com.danikvitek.deathutils.Main;
 import com.danikvitek.deathutils.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -43,7 +44,8 @@ public class DamageCommand implements CommandExecutor {
                     && Bukkit.getEntity(UUID.fromString(target)) instanceof Damageable)
                         ((Damageable) Objects.requireNonNull(Bukkit.getEntity(UUID.fromString(target))))
                                 .damage(amount, hasSource ? player : null);
-                    else player.sendMessage(ChatColor.RED + "Entity can't be damaged");
+                    else player.sendMessage(Main.getModifyLocalizationFile().getString("entity_cant_be_damaged",
+                                ChatColor.RED + "Entity can't be damaged"));
 
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
                     player.sendMessage(ChatColor.RED + usage);
@@ -51,6 +53,9 @@ public class DamageCommand implements CommandExecutor {
                     player.sendMessage(ChatColor.RED + "Amount must be integer and greater than 0");
                 }
             }
+            else
+                player.sendMessage(Main.getModifyLocalizationFile().getString("no_permission",
+                        ChatColor.DARK_RED + "You have no permission to do that"));
         } else {
             try {
                 if (args.length < 2) throw new NullPointerException();
@@ -69,7 +74,8 @@ public class DamageCommand implements CommandExecutor {
                         && Bukkit.getEntity(UUID.fromString(target)) instanceof Damageable)
                     ((Damageable) Objects.requireNonNull(Bukkit.getEntity(UUID.fromString(target))))
                             .damage(amount);
-                else System.out.println("Entity can't be damaged");
+                else System.out.println(Main.getModifyLocalizationFile().getString("entity_cant_be_damaged",
+                             "Entity can't be damaged"));
 
             } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
                 System.out.println(usage);

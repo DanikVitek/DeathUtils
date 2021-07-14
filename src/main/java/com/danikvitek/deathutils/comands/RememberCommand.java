@@ -30,28 +30,30 @@ public class RememberCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (player.hasPermission(Permissions.CAN_REMEMBER_DEATH_LOCATION.getPerm())) {
-                if (main.getModifyDeathCoordinatesFile().contains(player.getName())) {
-                    Location deathLoc = main.getModifyDeathCoordinatesFile().getLocation(player.getName() + ".location");
+                if (Main.getModifyDeathCoordinatesFile().contains(player.getName())) {
+                    Location deathLoc = Main.getModifyDeathCoordinatesFile().getLocation(player.getName() + ".location");
                     assert deathLoc != null;
                     String deathLocStr = "X: " + deathLoc.getBlockX() + " Y: " + deathLoc.getBlockY() + " Z: " + deathLoc.getBlockZ(),
                             deathWorldStr = "World: " + (getWorldsNames(main).get(Objects.requireNonNull(deathLoc.getWorld()).getName()) != null ?
                                     getWorldsNames(main).get(deathLoc.getWorld().getName()) :
                                     deathLoc.getWorld().getName());
 
-                    TextComponent deathLocMessage = new TextComponent(ChatColor.GOLD + "Your last death position: " + ChatColor.YELLOW + deathLocStr + ", " + deathWorldStr);
+                    TextComponent deathLocMessage = new TextComponent(Main.getModifyLocalizationFile().getString("your_last_death_position",
+                            ChatColor.GOLD + "Your last death position: " + ChatColor.YELLOW) + deathLocStr + ", " + deathWorldStr);
                     if (player.hasPermission(Permissions.CAN_DEATH_TP.getPerm())) {
-                        deathLocMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor.GREEN + "Click to teleport.")));
+                        deathLocMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(
+                                Main.getModifyLocalizationFile().getString("click_to_teleport", ChatColor.GREEN + "Click to teleport"))));
                         deathLocMessage.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/deathtp "+player.getName()));
                     }
                     player.spigot().sendMessage(deathLocMessage);
                 } else {
-                    player.sendMessage(ChatColor.GOLD + "No death notes");
+                    player.sendMessage(Main.getModifyLocalizationFile().getString("no_death_notes", ChatColor.GOLD + "No death notes"));
                 }
             }
             else
-                player.sendMessage(ChatColor.DARK_RED + "You have no permission to do that");
+                player.sendMessage(Main.getModifyLocalizationFile().getString("no_permission",ChatColor.DARK_RED + "You have no permission to do that"));
         } else {
-            System.out.println("Can't use this command if not a player.");
+            System.out.println(Main.getModifyLocalizationFile().getString("console_cant", "Can't use this command if not a player."));
         }
 
         return true;
